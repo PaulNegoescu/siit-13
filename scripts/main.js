@@ -108,6 +108,7 @@ async function getTodos() {
     // todos[i].completed && checkbox.setAttribute('checked', true);
   }
 
+  displayedContainer.innerHTML = '';
   displayedContainer.append(fragment);
 }
 
@@ -122,9 +123,31 @@ function handleTodoClick(e) {
     headers: {
       'Content-type': 'application/json',
     },
-  })
-    .then(handleResponse)
-    .then(console.log);
+  }).then(handleResponse);
 }
 
 getTodos();
+
+const form = document.querySelector('[data-add-todo]');
+form.addEventListener('submit', handleSubmit);
+function handleSubmit(e) {
+  e.preventDefault();
+
+  const title = e.target.elements.title.value;
+  fetch('http://localhost:3000/todos', {
+    method: 'POST',
+    body: JSON.stringify({
+      completed: false,
+      userId: 1,
+      title: title,
+    }),
+    headers: {
+      'Content-type': 'application/json',
+    },
+  })
+    .then(handleResponse)
+    .then(getTodos);
+}
+
+// CRUD - Create Read   Update   Delete
+// HTTP - POST   GET  PUT/PATCH  DELETE
