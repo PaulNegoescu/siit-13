@@ -76,6 +76,11 @@ async function getTodos() {
     'https://jsonplaceholder.typicode.com/todos?userId=1'
   ).then(handleResponse);
 
+  // const res = await fetch(
+  //   'https://jsonplaceholder.typicode.com/todos?userId=1'
+  // );
+  // const todos = await handleResponse(res);
+
   console.log(todos);
   const displayedContainer = document.querySelector('[data-todos]');
   const fragment = document.createDocumentFragment();
