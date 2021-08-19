@@ -72,9 +72,9 @@ function handleResponse(res) {
 }
 
 async function getTodos() {
-  const todos = await fetch(
-    'https://jsonplaceholder.typicode.com/todos?userId=1'
-  ).then(handleResponse);
+  const todos = await fetch('http://localhost:3000/todos?userId=1').then(
+    handleResponse
+  );
 
   // const res = await fetch(
   //   'https://jsonplaceholder.typicode.com/todos?userId=1'
@@ -93,6 +93,12 @@ async function getTodos() {
 
     checkbox.setAttribute('type', 'checkbox'); //checkbox.type = 'checkbox'
     label.append(todo.title);
+    label.htmlFor = 'todo' + todo.id;
+    checkbox.id = label.htmlFor;
+
+    checkbox.dataset.todoId = todo.id; //data- .dataset['test'] -> data-test
+    checkbox.addEventListener('change', handleTodoClick);
+
     p.append(checkbox, label);
     fragment.append(p);
 
@@ -103,6 +109,22 @@ async function getTodos() {
   }
 
   displayedContainer.append(fragment);
+}
+
+function handleTodoClick(e) {
+  const isTodoChecked = e.target.checked;
+  const todoId = e.target.dataset.todoId;
+  fetch('http://localhost:3000/todos/' + todoId, {
+    method: 'PATCH',
+    body: JSON.stringify({
+      completed: isTodoChecked,
+    }),
+    headers: {
+      'Content-type': 'application/json',
+    },
+  })
+    .then(handleResponse)
+    .then(console.log);
 }
 
 getTodos();
