@@ -304,28 +304,154 @@ const classes = [
   ['Math', '11:30AM', 'Mrs. Vitalis'],
 ];
 
-console.log('Classes: ', objClasses);
+function transformArr(arr) {
+  // const res = [];
 
-console.clear();
+  // for (const [subject, time, teacher] of arr) {
+  //   // const [subject, time, teacher] = elem;
+  //   res.push({ subject, time, teacher });
+  // }
+
+  // return res;
+
+  return arr.map(([subject, time, teacher]) => ({
+    subject,
+    time,
+    teacher,
+  }));
+}
+
+// classes.map(([subject, time, teacher]) =>
+//   console.log({ subject, time, teacher })
+// );
+
+// const [subject, time, teacher] = ['Chemistry', '9AM', 'Mr. Darnick'];
+// const [one, two, three] = [1, 2, 3];
+
+console.log('Classes: ', transformArr(classes));
+
+// console.clear();
 
 const result1 = [
-  { id: 1, name: 'Sandra', type: 'user', username: 'sandra', email='sandra@gmail.com' },
-  { id: 2, name: 'John', type: 'admin', username: 'johnny2', email='john@gmail.com' },
-  { id: 3, name: 'Peter', type: 'user', username: 'pete', email='peter@gmail.com' },
-  { id: 4, name: 'Bobby', type: 'user', username: 'be_bob', email='bobby@gmail.com' },
+  {
+    id: 1,
+    name: 'Sandra',
+    type: 'user',
+    username: 'sandra',
+    email: 'sandra@gmail.com',
+  },
+  {
+    id: 2,
+    name: 'John',
+    type: 'admin',
+    username: 'johnny2',
+    email: 'john@gmail.com',
+  },
+  {
+    id: 3,
+    name: 'Peter',
+    type: 'user',
+    username: 'pete',
+    email: 'peter@gmail.com',
+  },
+  {
+    id: 4,
+    name: 'Bobby',
+    type: 'user',
+    username: 'be_bob',
+    email: 'bobby@gmail.com',
+  },
 ];
 
 const result2 = [
   { id: 2, name: 'John', email: 'john@gmail.com' },
-  { id: 4, name: 'Bobby', email: 'bobby@example.com' },
+  {
+    id: 4,
+    name: 'Bobby',
+    type: 'user',
+    username: 'be_bob',
+    email: 'bobby@gmail.com',
+  },
 ];
 
-const props = ['id', 'name'];
+const props = ['email', 'name', 'id'];
 
-// intersectia array-urilor unde proprietatile din props sunt aceleasi props = {email, name}
-function arrayIntersection(arr1, arr2, props) {}
+// intersectia array-urilor unde proprietatile din props sunt aceleasi in ambele obiecte
+function arrayIntersection(arr1, arr2, props) {
+  const res = [];
+
+  for (const obj1 of arr1) {
+    for (const obj2 of arr2) {
+      let isTheSame = true;
+
+      for (const prop of props) {
+        if (obj1[prop] !== obj2[prop]) {
+          isTheSame = false;
+          break;
+        }
+      }
+
+      if (isTheSame) {
+        res.push(obj1);
+      }
+    }
+  }
+
+  return res;
+}
+
+//tot obiectul e la fel, toate proprietatile obiectului sunt identice
+function arrayIntersection3(arr1, arr2) {
+  const res = [];
+
+  for (const obj1 of arr1) {
+    for (const obj2 of arr2) {
+      let isTheSame = true;
+
+      for (const prop in obj1) {
+        if (obj1[prop] !== obj2[prop]) {
+          isTheSame = false;
+          break;
+        }
+      }
+
+      if (isTheSame) {
+        res.push(obj1);
+      }
+    }
+  }
+
+  return res;
+}
 
 // intersectia array-urilor unde "name" e acelasi
-function arrayIntersection2(arr1, arr2) {}
+function arrayIntersection2(arr1, arr2, prop) {
+  // const res = [];
 
-console.log(arrayIntersection2(result1, result2));
+  // for (const obj1 of arr1) {
+  //   for (const obj2 of arr2) {
+  //     if (obj1[prop] === obj2[prop]) {
+  //       res.push(obj1);
+  //     }
+  //   }
+  // }
+
+  // return res;
+
+  return arr1.filter((obj1) => arr2.some((obj2) => obj1[prop] === obj2[prop]));
+}
+
+console.log(arrayIntersection3(result1, result2));
+
+function displayPattern(width, height) {
+  let pattern = '';
+  for (let i = 0; i < height; i++) {
+    for (let j = 0; j < width; j++) {
+      pattern += ((j + i) % 2) + ' ';
+    }
+    pattern += '\n';
+  }
+  console.log(pattern);
+}
+
+displayPattern(3, 10);
