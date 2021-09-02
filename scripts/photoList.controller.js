@@ -4,10 +4,13 @@
     Le afisam in pagina
 */
 class PhotoList {
-    async constructor() {
-        this.model = new Photos();
-        const photos = await this.model.getAllPhotos();
-        //trebuie sa le trimitem la view
-        this.view = new PhotoListView(photos);
-    }
+  constructor() {
+    this.model = new Photos();
+    this.model
+      .getAllPhotos()
+      .then((photos) => (this.view = new PhotoListView(photos)));
+    //trebuie sa le trimitem la view
+  }
 }
+
+new PhotoList();

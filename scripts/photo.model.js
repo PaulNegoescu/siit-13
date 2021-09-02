@@ -1,7 +1,14 @@
+const apiUrl = 'http://localhost:3000/';
+
 class Photos {
-  url = 'http://localhost:3000/photos?_limit=20';
+  endpoint = apiUrl + 'photos';
 
   getAllPhotos() {
-    return fetch(this.url).then((res) => res.json());
+    const url = this.endpoint + '?_limit=20';
+    return fetch(url).then((res) => res.json());
+  }
+
+  getPhotoById(id) {
+    return fetch(`${this.endpoint}/${id}`).then((res) => res.json());
   }
 }
