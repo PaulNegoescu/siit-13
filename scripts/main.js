@@ -1,5 +1,43 @@
 'use strict';
 
+// Constructor function
+function Animal(noLegs) {
+  this.noLegs = noLegs;
+}
+
+Animal.prototype.move = function () {
+  console.log(`This animal has ${this.noLegs} legs and is moving!`);
+};
+
+class Dog extends Animal {
+  constructor(sound) {
+    super(4);
+    this.sound = sound;
+  }
+
+  speak() {
+    console.log(this.sound);
+  }
+
+  move() {
+    console.log(`The dog runs happily!`);
+  }
+}
+
+const fido = new Dog('Woof');
+const rex = new Dog('Ham');
+
+fido.move();
+rex.speak();
+
+console.log(fido);
+
+// console.log(
+//   Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(animal)))
+// );
+
+/*
+// Object Literal
 const person = {
   fName: 'Paul',
   lName: 'Negoescu',
@@ -17,6 +55,7 @@ const person = {
 
 console.log('Full Name: ', person.calculateBmi());
 
+// Class
 class Person {
   constructor(config) {
     this.fName = config.fName;
@@ -54,4 +93,5 @@ const person2 = new Person({
   'phone-numbers': ['0723000001', '0368400401'],
 });
 
-console.log(person2);
+console.log(person2.calculateBmi());
+ */
