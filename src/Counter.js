@@ -2,13 +2,17 @@ function Counter() {
   return (
     <>
       <h1>Counter</h1>
+      <output>0</output>
       <p>
-        <output>0</output>
+        <button>-</button>
+        <button>+</button>
       </p>
-      <button>-</button>
-      <button>+</button>
     </>
   );
 }
 
-export default Counter;
+// const test = 'Paul';
+
+// export default test; // default export
+
+export { Counter }; // named export
