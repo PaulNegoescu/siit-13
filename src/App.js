@@ -1,8 +1,10 @@
-import { Parent } from './Communication/Parent';
-import { Counter } from './Counter/Counter';
+// import { Parent } from './Communication/Parent';
+// import { Counter } from './Counter/Counter';
+
+import { TodoList } from './Todos/TodoList';
 
 function App() {
-  return <Parent />;
+  return <TodoList />;
 }
 
 export default App;
