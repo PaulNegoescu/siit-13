@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import styles from './Counter.module.css';
 
-function Counter() {
+function Counter({ what }) {
   //   let value = 0;
   const [value, setValue] = useState(0);
 
@@ -24,7 +24,7 @@ function Counter() {
 
   return (
     <>
-      <h1>Counter</h1>
+      <h1>Counter for {what}</h1>
       {/* <output className={value < 0 ? styles.negative : value > 0 ? styles.positive : ''}> */}
       <output
         className={clsx({

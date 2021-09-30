@@ -1,7 +1,8 @@
-import { Counter } from './Counter';
+import { Parent } from './Communication/Parent';
+import { Counter } from './Counter/Counter';
 
 function App() {
-  return <Counter />;
+  return <Parent />;
 }
 
 export default App;
