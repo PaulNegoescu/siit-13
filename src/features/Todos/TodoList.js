@@ -64,12 +64,20 @@ export function TodoList() {
     );
   }
 
+  async function handleDelete(id) {
+    await fetch('http://localhost:3001/todos/' + id, {
+      method: 'DELETE',
+    });
+
+    setTodos(todos.filter((todo) => todo.id !== id));
+  }
+
   return (
     <>
       <h1>Todos</h1>
       <button onClick={() => setShowModal(true)}>Add Todo</button>
       {todos?.map((one) => (
-        <TodoItem key={one.id} todo={one} />
+        <TodoItem key={one.id} todo={one} onDelete={handleDelete} />
       ))}
       <Modal
         title="Test modal"
