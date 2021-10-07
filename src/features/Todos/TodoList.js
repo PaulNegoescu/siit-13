@@ -6,6 +6,8 @@ export function TodoList() {
   const [todos, setTodos] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
+  console.log(todos);
+
   useEffect(() => {
     console.log('Effect triggered');
     fetch('http://localhost:3001/todos?userId=1')
@@ -76,9 +78,10 @@ export function TodoList() {
     <>
       <h1>Todos</h1>
       <button onClick={() => setShowModal(true)}>Add Todo</button>
-      {todos?.map((one) => (
-        <TodoItem key={one.id} todo={one} onDelete={handleDelete} />
-      ))}
+      {Array.isArray(todos) &&
+        todos.map((one) => (
+          <TodoItem key={one.id} todo={one} onDelete={handleDelete} />
+        ))}
       <Modal
         title="Test modal"
         footer={getModalFooter()}

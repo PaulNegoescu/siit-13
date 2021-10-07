@@ -23,6 +23,12 @@ export function Nav() {
             Todos
           </NavLink>
         </li>
+
+        <li>
+          <NavLink to="/register" activeClassName={styles.active}>
+            Register
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );
