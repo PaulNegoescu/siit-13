@@ -18,6 +18,7 @@ function App() {
           <Route exact path="/" component={Counter} />
           <Route path="/communication" component={Parent} />
           <Route path="/todos" component={TodoList} />
+          <Route path="/login" component={Auth} />
           <Route path="/register" component={Auth} />
           <Route path="*" component={() => <h1>404 Page not found</h1>} />
         </Switch>

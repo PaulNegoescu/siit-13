@@ -24,6 +24,11 @@ export function Nav() {
           </NavLink>
         </li>
 
+        <li className={styles['push-right']}>
+          <NavLink to="/login" activeClassName={styles.active}>
+            Login
+          </NavLink>
+        </li>
         <li>
           <NavLink to="/register" activeClassName={styles.active}>
             Register

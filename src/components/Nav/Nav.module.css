@@ -2,6 +2,9 @@
   display: flex;
   gap: 0.5rem;
   list-style: none;
+  flex-grow: 1;
+
+  margin: 0;
 }
 
 .main-menu a {
@@ -27,4 +30,8 @@
 
 .active {
   background-color: var(--primary-color);
+}
+
+.push-right {
+  margin-left: auto;
 }

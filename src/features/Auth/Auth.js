@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export function Auth() {
   const [values, setValues] = useState({
@@ -14,6 +15,14 @@ export function Auth() {
     'retype-password': '',
   });
 
+  const [apiError, setApiError] = useState('');
+
+  const location = useLocation();
+  let isLogin = false;
+  if (location.pathname.includes('login')) {
+    isLogin = true;
+  }
+
   function handleChange(e) {
     const newValues = { ...values };
     newValues[e.target.name] = e.target.value;
@@ -22,6 +31,7 @@ export function Auth() {
 
     setValues(newValues);
     setErrors(newErrors);
+    setApiError('');
     // setValues({ ...values, [e.target.name]: e.target.value });
     // setErrors({ ...errors, [e.target.name]: '' });
   }
@@ -31,43 +41,61 @@ export function Auth() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    let hasErrors = false;
+    if (!isFormValid()) {
+      return;
+    }
+
+    const data = await fetch(
+      `http://localhost:3001/${isLogin ? 'login' : 'register'}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+        }),
+      }
+    ).then((res) => res.json());
+
+    if (data.accessToken) {
+    } else {
+      setApiError(data);
+    }
+  }
+
+  function isFormValid() {
+    let isValid = true;
     let newErrors = { ...errors };
 
     if (!values.email) {
-      hasErrors = true;
+      isValid = false;
       newErrors.email = 'Please enter your email in order to register!';
     }
 
     if (!values.password) {
-      hasErrors = true;
+      isValid = false;
       newErrors.password = 'Please choose a password';
     }
 
-    if (values.password !== values['retype-password']) {
-      hasErrors = true;
+    if (!isLogin && values.password !== values['retype-password']) {
+      isValid = false;
       newErrors['retype-password'] = 'Your passwords did not match!';
     }
 
-    if (hasErrors) {
-      setErrors(newErrors);
-      return;
-    }
-
-    const data = await fetch('http://localhost:3001/register', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({ email: values.email, password: values.password }),
-    }).then((res) => res.json());
-
-    console.log(data);
+    setErrors(newErrors);
+    return isValid;
   }
 
   return (
     <form onSubmit={handleSubmit} noValidate={true}>
-      <h1>Register</h1>
+      <h1>{isLogin ? 'Login' : 'Register'}</h1>
+      {apiError && (
+        <div className="alert alert-danger" role="alert">
+          {apiError}
+        </div>
+      )}
       <div className="mb-3">
         <label htmlFor="email" className="form-label">
           Email address
@@ -94,22 +122,26 @@ export function Auth() {
           className={clsx('form-control', { 'is-invalid': errors.password })}
         />
         <div className="invalid-feedback">{errors.password}</div>
-        <label htmlFor="retype-password" className="form-label">
-          Retype Password
-        </label>
-        <input
-          type="password"
-          id="retype-password"
-          name="retype-password"
-          value={values['retype-password']}
-          onChange={handleChange}
-          className={clsx('form-control', {
-            'is-invalid': errors['retype-password'],
-          })}
-        />
-        <div className="invalid-feedback">{errors['retype-password']}</div>
+        {!isLogin && (
+          <>
+            <label htmlFor="retype-password" className="form-label">
+              Retype Password
+            </label>
+            <input
+              type="password"
+              id="retype-password"
+              name="retype-password"
+              value={values['retype-password']}
+              onChange={handleChange}
+              className={clsx('form-control', {
+                'is-invalid': errors['retype-password'],
+              })}
+            />
+            <div className="invalid-feedback">{errors['retype-password']}</div>
+          </>
+        )}
         <button type="submit" className="btn btn-primary">
-          Register
+          {isLogin ? 'Login' : 'Register'}
         </button>
       </div>
     </form>
