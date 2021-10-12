@@ -15,24 +15,24 @@
   box-sizing: border-box;
 }
 
-.btn {
+/* .btn {
   border: 1px solid #999;
   background-color: var(--light-grey);
   border-radius: var(--border-radius);
 
   padding: 0.2em 0.5em;
-}
+} */
 
-.btn:focus {
+/* .btn:focus {
   background-color: var(--dark-grey);
-}
+} */
 
-.btn-primary {
+/* .btn-primary {
   background-color: var(--primary-color);
   border-color: var(--primary-dark);
   color: var(--primary-dark);
-}
+} */
 
-.btn-primary:focus {
+/* .btn-primary:focus {
   background-color: var(--primary-light);
-}
+} */

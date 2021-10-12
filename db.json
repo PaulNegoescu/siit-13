@@ -4,6 +4,21 @@
       "email": "paul.negoescu@scoalainformala.ro",
       "password": "$2a$10$bl444yoA93A5Vrmd9sDWhOCWDTnVVAwzlmvgULhfwq4KjS/IFmANK",
       "id": 1
+    },
+    {
+      "email": "a@a.com",
+      "password": "$2a$10$X3DArjWkfzVrN1dWaYt2tetfM/NHA2ehZk5kINqWfnrjjbJ1GvAT6",
+      "id": 2
+    },
+    {
+      "email": "p@p.com",
+      "password": "$2a$10$JcODsi8qDnsoev0MU9dOqe76xnMuPvGMfiZ/0jTdSNCVhK0U795Om",
+      "id": 3
+    },
+    {
+      "email": "asdas@dsasda",
+      "password": "$2a$10$/PkrAjVkwT62vWAcbenZO.JNAO9Ll/8DLK3sBeppLjGL72koQ5IUm",
+      "id": 4
     }
   ],
   "todos": [
