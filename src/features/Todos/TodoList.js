@@ -1,21 +1,23 @@
 import { useEffect, useState } from 'react';
 import { Modal } from '../../components/Modal/Modal';
+import { useAuth } from '../Auth/Auth.context';
 import { TodoItem } from './TodoItem';
 
 export function TodoList() {
   const [todos, setTodos] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  console.log(todos);
+  const { auth } = useAuth();
 
   useEffect(() => {
-    console.log('Effect triggered');
-    fetch('http://localhost:3001/todos?userId=1')
+    fetch(`http://localhost:3001/todos?userId=${auth?.user.id}`, {
+      headers: {
+        Authorization: `Bearer ${auth?.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => setTodos(data));
-  }, []);
-
-  console.log('render', todos);
+  }, [auth]);
 
   //   const renderedTodos = [];
   //   if (todos) {
@@ -41,9 +43,10 @@ export function TodoList() {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
+        Authorization: `Bearer ${auth?.accessToken}`,
       },
       body: JSON.stringify({
-        userId: 1,
+        userId: auth.user.id,
         title: todoText,
         completed: false,
       }),
@@ -69,9 +72,27 @@ export function TodoList() {
   async function handleDelete(id) {
     await fetch('http://localhost:3001/todos/' + id, {
       method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${auth?.accessToken}`,
+      },
     });
 
     setTodos(todos.filter((todo) => todo.id !== id));
+  }
+
+  async function handleUpdateTodo(todo) {
+    await fetch(`http://localhost:3001/todos/${todo.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${auth?.accessToken}`,
+      },
+      body: JSON.stringify({
+        completed: !todo.completed,
+      }),
+    });
+
+    todo.completed = !todo.completed;
   }
 
   return (
@@ -80,7 +101,12 @@ export function TodoList() {
       <button onClick={() => setShowModal(true)}>Add Todo</button>
       {Array.isArray(todos) &&
         todos.map((one) => (
-          <TodoItem key={one.id} todo={one} onDelete={handleDelete} />
+          <TodoItem
+            key={one.id}
+            todo={one}
+            onDelete={handleDelete}
+            onUpdateTodo={handleUpdateTodo}
+          />
         ))}
       <Modal
         title="Test modal"
