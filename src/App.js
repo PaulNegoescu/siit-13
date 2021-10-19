@@ -7,6 +7,9 @@ import { Nav } from './components/Nav/Nav';
 import { Auth } from './features/Auth/Auth';
 import { AuthContextProvider } from './features/Auth/Auth.context';
 import { PrivateRoute } from './components/PrivateRoute';
+import { AlbumList } from './features/Albums/AlbumList';
+import { AlbumDetails } from './features/Albums/AlbumDetails';
+import { EditAlbum } from './features/Albums/EditAlbum';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
@@ -21,6 +24,9 @@ function App() {
             <Route exact path="/" component={Counter} />
             <Route path="/communication" component={Parent} />
             <PrivateRoute path="/todos" component={TodoList} />
+            <Route exact path="/albums" component={AlbumList} />
+            <Route exact path="/albums/edit/:id" component={EditAlbum} />
+            <Route path="/albums/:id" component={AlbumDetails} />
             {/* <PrivateRoute path="/todos">
               <TodoList />
             </PrivateRoute> */}

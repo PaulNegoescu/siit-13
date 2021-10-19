@@ -7,7 +7,7 @@ export function TodoList() {
   const [todos, setTodos] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  const { auth } = useAuth();
+  const { auth, logout } = useAuth();
 
   useEffect(() => {
     fetch(`http://localhost:3001/todos?userId=${auth?.user.id}`, {
@@ -15,9 +15,22 @@ export function TodoList() {
         Authorization: `Bearer ${auth?.accessToken}`,
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          if (res.status === 401) {
+            logout();
+            throw new Error('Token expired!');
+          }
+          throw new Error(
+            'Fetching data failed with status code: ',
+            res.status
+          );
+        }
+
+        return res.json();
+      })
       .then((data) => setTodos(data));
-  }, [auth]);
+  }, [auth, logout]);
 
   //   const renderedTodos = [];
   //   if (todos) {

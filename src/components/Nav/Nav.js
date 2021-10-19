@@ -29,9 +29,10 @@ export function Nav() {
             Communication
           </NavLink>
         </li>
+
         <li>
-          <NavLink to="/todos" activeClassName={styles.active}>
-            Todos
+          <NavLink to="/albums" activeClassName={styles.active}>
+            Albums
           </NavLink>
         </li>
 
@@ -52,6 +53,12 @@ export function Nav() {
 
         {auth?.user && (
           <>
+            <li>
+              <NavLink to="/todos" activeClassName={styles.active}>
+                Todos
+              </NavLink>
+            </li>
+
             <li className={styles['push-right']}>
               Welcome,{' '}
               <NavLink to="/profile" activeClassName={styles.active}>
