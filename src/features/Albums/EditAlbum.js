@@ -32,6 +32,17 @@ export function EditAlbum() {
     });
   }
 
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
+  async function fileChange(e) {
+    console.log(await toBase64(e.target.files[0]));
+  }
   if (!album) {
     return <h2>Loading ...</h2>;
   }
@@ -47,6 +58,7 @@ export function EditAlbum() {
           value={album.title}
           onChange={handleChange}
         />
+        <input type="file" onChange={fileChange} />
         <button>Save</button>
       </form>
     </>
